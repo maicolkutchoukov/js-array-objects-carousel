@@ -50,7 +50,6 @@ const images = [
     },
 ];
 
-
 const carousel = document.querySelector('.carousel-container');
 const slider = document.querySelector(".slide");
 console.log(images)
@@ -60,12 +59,12 @@ for (let i = 0; i < images.length; i++) {
     const items = document.createElement('div');
     items.classList.add('items');
     items.innerHTML = `
-                    <img src=${images[i].url} class="img-fluid"> 
-                    <div class="items-body text-end pe-4 text-white">
-                    <h2 class="">${images[i].title}</h2>
-                    <p>${images[i].description}</p>
-                    </div>
-`
+                        <img src=${images[i].url} class="img-fluid"> 
+                        <div class="items-body text-end pe-4 text-white">
+                        <h2 class="">${images[i].title}</h2>
+                        <p>${images[i].description}</p>
+                        </div>
+                    `
     const sliderImage = document.createElement('img');
     sliderImage.src = images[i].url
     slider.append(sliderImage);
@@ -75,44 +74,31 @@ for (let i = 0; i < images.length; i++) {
        sliderImage.classList.add('border-slide')
     }
     carousel.append(items);
-
 }
 
 const buttonPrev = document.querySelector('.prev');
 const buttonNext = document.querySelector('.next');
+const itemsArray = document.querySelectorAll(".items")
+const imgSlide = document.querySelectorAll('.slide>img');
 let contatore = 0
 
 // Creazione bottone scorrimento 'Foto successiva'
-const itemsArray = document.querySelectorAll(".items")
-console.log(itemsArray);
-const imgSlide = document.querySelectorAll('.slide>img');
-console.log(imgSlide)
-buttonNext.addEventListener('click', function(){
-    myFunctionNext()             
-})
+
+buttonNext.addEventListener('click', myFunctionNext)
 
 // Creazione bottone scorrimento 'Foto Precedente'
 
-buttonPrev.addEventListener('click', function(){
-    itemsArray[contatore].classList.remove('active');      
-    imgSlide[contatore].classList.remove('border-slide');
-    if (contatore > 0){    
-        contatore--;              
-    }  else {   
-        contatore = 4;
-    }   
-    itemsArray[contatore].classList.add('active');
-    imgSlide[contatore].classList.add('border-slide');
-
-})
+buttonPrev.addEventListener('click', myFunctionPrev)
 
 // Timing function
 
 let clock = setInterval(myFunctionNext, 3000);
 
+// Functions Next and Prev
+
 function myFunctionNext(){
-        itemsArray[contatore].classList.remove('active');
-        imgSlide[contatore].classList.remove('border-slide');
+    itemsArray[contatore].classList.remove('active');
+    imgSlide[contatore].classList.remove('border-slide');
 
     
     if (contatore < 4){
@@ -125,6 +111,20 @@ function myFunctionNext(){
 
 }
 
+function myFunctionPrev(){
+    itemsArray[contatore].classList.remove('active');      
+    imgSlide[contatore].classList.remove('border-slide');
+    if (contatore > 0){    
+        contatore--;              
+    }  else {   
+        contatore = 4;
+    }   
+    itemsArray[contatore].classList.add('active');
+    imgSlide[contatore].classList.add('border-slide');
+}
+
+// Bottone stop/start autoplay
+
 const stopButton = document.querySelector('.stop');
 stopButton.addEventListener ('click', function(){
     if (clock != null) {
@@ -135,7 +135,6 @@ stopButton.addEventListener ('click', function(){
     } else {
         clock = setInterval(myFunctionNext, 3000);
         stopButton.innerHTML = "Ferma L'autoplay"
-
     }
-}
+    }
 )
