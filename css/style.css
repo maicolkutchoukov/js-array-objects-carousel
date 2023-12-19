@@ -81,3 +81,8 @@ button:not(.stop){
     margin-left: 2px;
 }
 
+.stop{
+    position: relative;
+    top: 250px;
+}
+

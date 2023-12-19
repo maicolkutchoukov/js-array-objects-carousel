@@ -1,15 +1,23 @@
 /*
 -----------------------------------------------------------
-MILESTONE 2
-Adesso rimuoviamo tutto il markup statico e 
-inseriamo tutte le immagini dinamicamente
-servendoci dell'array fornito e un semplice 
-ciclo for che concatena un template literal.
-Tutte le immagini saranno nascoste, tranne la prima, 
-che avrà una classe specifica che la renderà visibile.
-Al termine di questa fase ci ritroveremo 
-con lo stesso slider stilato nella milestone 1, 
-ma costruito dinamicamente attraverso JavaScript.
+Consegna:
+Dato un array di oggetti letterali con:
+ - url dell'immagine
+ - titolo
+ - descrizione
+Creare un carosello come nella foto allegata.
+Milestone 0:
+Come nel primo carosello realizzato, focalizziamoci prima sulla creazione del markup statico: 
+costruiamo il container e inseriamo l'immagine grande in modo da poter stilare lo slider.
+Milestone 1:
+Ora rimuoviamo i contenuti statici e usiamo l'array di oggetti letterali per popolare dinamicamente il carosello.
+Al click dell'utente sulle frecce verso sinistra o destra, 
+l'immagine attiva diventerà visibile e dovremo aggiungervi titolo e testo.
+Milestone 2:
+Aggiungere il ciclo infinito del carosello. 
+Ovvero se la slide attiva è la prima e l'utente clicca la freccia verso destra, 
+la slide che deve attivarsi sarà l'ultima e viceversa per l'ultima slide 
+se l'utente clicca la freccia verso sinistra.
 -----------------------------------------------------------
 */
 const images = [
@@ -43,19 +51,6 @@ const images = [
 ];
 
 
-// const img1 = document.createElement('img');
-// img1.src = 'img/01.webp';
-// img1.classList = 'active'
-// const img2 = document.createElement('img');
-// img2.src = 'img/02.webp';
-// const img3 = document.createElement('img');
-// img3.src = 'img/03.webp';
-// const img4 = document.createElement('img');
-// img4.src = 'img/04.webp';
-// const img5 = document.createElement('img');
-// img5.src = 'img/05.webp';
-
-// const imgArray = [img1, img2, img3, img4, img5];
 const carousel = document.querySelector('.carousel-container');
 const slider = document.querySelector(".slide");
 console.log(images)
@@ -71,9 +66,6 @@ for (let i = 0; i < images.length; i++) {
                     <p>${images[i].description}</p>
                     </div>
 `
-    // slider.innerHTML += `
-    //                 <img src=${images[i].url} class="img-fluid active">
-    // `
     const sliderImage = document.createElement('img');
     sliderImage.src = images[i].url
     slider.append(sliderImage);
@@ -85,21 +77,6 @@ for (let i = 0; i < images.length; i++) {
     carousel.append(items);
 
 }
-
-/*
---------------------------------------------------------------------------------
-MILESTONE 3
-Al click dell'utente sulle frecce, il programma cambierà l'immagine attiva, 
-che quindi verrà visualizzata al posto della precedente.
-Prima di partire a scrivere codice:
-Non lasciamoci spaventare dalla complessità apparente dell'esercizio, 
-ma analizziamo prima, come abbiamo fatto sempre, cosa ci potrebbe aspettare.
-Abbiamo completato ormai da qualche giorno la sessione HTML e CSS, 
-se non ci ricordiamo qualcosa andiamo pure a riguardare alcuni argomenti. 
-Non dedichiamo però al ripasso più di una mezz'ora, 
-così da non perdere di vista il focus dell'esercizio.
---------------------------------------------------------------------------------
-*/
 
 const buttonPrev = document.querySelector('.prev');
 const buttonNext = document.querySelector('.next');
@@ -131,7 +108,7 @@ buttonPrev.addEventListener('click', function(){
 
 // Timing function
 
-// let clock = setInterval(myFunctionNext, 1000);
+let clock = setInterval(myFunctionNext, 3000);
 
 function myFunctionNext(){
         itemsArray[contatore].classList.remove('active');
@@ -148,17 +125,17 @@ function myFunctionNext(){
 
 }
 
-// const stopButton = document.querySelector('.stop');
-// stopButton.addEventListener ('click', function(){
-//     if (clock != null) {
-//         clearInterval(clock);
-//         stopButton.innerHTML = "Riavvia L'autoplay"
+const stopButton = document.querySelector('.stop');
+stopButton.addEventListener ('click', function(){
+    if (clock != null) {
+        clearInterval(clock);
+        stopButton.innerHTML = "Riavvia L'autoplay"
 
-//         clock = null
-//     } else {
-//         clock = setInterval(myFunctionNext, 3000);
-//         stopButton.innerHTML = "Ferma L'autoplay"
+        clock = null
+    } else {
+        clock = setInterval(myFunctionNext, 3000);
+        stopButton.innerHTML = "Ferma L'autoplay"
 
-//     }
-// }
-// )
+    }
+}
+)
